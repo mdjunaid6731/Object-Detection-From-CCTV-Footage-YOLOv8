@@ -5,11 +5,12 @@ import math
 import time
 
 # Open the default camera
-capture = cv2.VideoCapture(0)
-
+#capture = cv2.VideoCapture(0)
 # Set the width and height of the video frame to display
-capture.set(3, 1280)
-capture.set(4, 720)
+#capture.set(3, 1280)
+#capture.set(4, 720)
+
+capture = cv2.VideoCapture("../Videos/cars.mp4") # For Video
 
 model = YOLO('../YOLO_Weights/yolov8n.pt')  # Load the yolo model with weights
 
@@ -34,7 +35,7 @@ while True:
             x1, y1, x2, y2 = box.xyxy[0]  # Bounding Box
             x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
             w, h = x2 - x1, y2 - y1  # Calculate the width and height of bounding box
-            cvzone.cornerRect(img, (x1, y1, w, h),l=35, t=5, rt=2, colorR=(10,255,10), colorC=(0,0,255 )) # cornerRectangle with custom colours
+            cvzone.cornerRect(img, (x1, y1, w, h),l=15, t=5, rt=2, colorR=(10,255,10), colorC=(0,0,255 )) # cornerRectangle with custom colours
             # Confidence
             conf = math.ceil((box.conf[0] * 100)) / 100
             # Class Name
