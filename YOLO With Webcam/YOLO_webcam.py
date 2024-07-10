@@ -6,13 +6,12 @@ import time
 
 # Open the default camera
 #capture = cv2.VideoCapture(0)
-# Set the width and height of the video frame to display
-#capture.set(3, 1280)
+#capture.set(3, 1280) # Set the width and height of the video frame to display
 #capture.set(4, 720)
 
 capture = cv2.VideoCapture("../Videos/cars.mp4") # For Video
 
-model = YOLO('../YOLO_Weights/yolov8n.pt')  # Load the yolo model with weights
+model = YOLO('../YOLO_Weights/yolov8l.pt')  # Load the yolo model with weights
 
 classNames = ["person" , "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
               "traffic light", "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat",
