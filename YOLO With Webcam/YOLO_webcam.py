@@ -11,6 +11,12 @@ import time
 
 capture = cv2.VideoCapture("../Videos/cars.mp4") # For Video
 
+# Get the total duration of the video in frames
+total_frames = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
+
+# Get the frames per second (FPS) of the video
+fps = capture.get(cv2.CAP_PROP_FPS)
+
 model = YOLO('../YOLO_Weights/yolov8l.pt')  # Load the yolo model with weights
 
 classNames = ["person" , "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
@@ -27,6 +33,24 @@ classNames = ["person" , "bicycle", "car", "motorbike", "aeroplane", "bus", "tra
 # Start an infinite loop to continuously capture frames from the webcam
 while True:
     success, img = capture.read()   # Read a frame from the webcam
+    if not success:
+        break  # If the video ends, exit the loop
+
+    # Get the current frame number
+    current_frame = int(capture.get(cv2.CAP_PROP_POS_FRAMES))
+
+    # Calculate the elapsed time and total duration in seconds
+    elapsed_time = current_frame / fps
+    total_time = total_frames / fps
+
+    # Format the elapsed time and total duration as MM:SS
+    elapsed_time_str = time.strftime("%M:%S", time.gmtime(elapsed_time))
+    total_time_str = time.strftime("%M:%S", time.gmtime(total_time))
+
+    # Display the timeline as "elapsed_time / total_time"
+    timeline = f"{elapsed_time_str}/{total_time_str}"
+
+
     results = model(img, stream = True)  # Pass the captured frames to model for r in results:
     for r in results:
         boxes = r.boxes
@@ -41,6 +65,9 @@ while True:
             cls = int(box.cls[0])
             # Display Class Name and Confidence
             cvzone.putTextRect(img, f'{classNames[cls]} {conf}', (max(0, x1), max(35, y1)), scale=1.5, thickness=1,colorR=(255, 0, 0))
+
+    # Add the timeline to the frame
+    cv2.putText(img, timeline, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
     cv2.imshow("Webcam", img)   # Display the captured frame in a window named "Webcam"
     cv2.waitKey(1)   # Wait for 1 millisecond and check if a key is pressed
