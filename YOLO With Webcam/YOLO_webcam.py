@@ -9,7 +9,7 @@ import time
 #capture.set(3, 1280) # Set the width and height of the video frame to display
 #capture.set(4, 720)
 
-capture = cv2.VideoCapture("../Videos/cars.mp4") # For Video
+capture = cv2.VideoCapture("../Videos/Camera_View.mp4") # For Video
 
 # Get the total duration of the video in frames
 total_frames = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
