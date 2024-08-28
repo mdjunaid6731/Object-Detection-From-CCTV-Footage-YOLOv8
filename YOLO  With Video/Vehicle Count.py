@@ -54,6 +54,8 @@ while True:
     timeline = f"{elapsed_time_str}/{total_time_str}"
 
     imgRegion = cv2.bitwise_and(img, mask)
+    imgGraphics = cv2.imread("graphics.png", cv2.IMREAD_UNCHANGED)
+    img = cvzone.overlayPNG(img, imgGraphics, (0, 0))
     results = model(imgRegion, stream = True)  # Pass the captured frames to model for r in results:
     detections = np.empty((0, 5))
 
@@ -71,8 +73,8 @@ while True:
             currentClass = classNames[cls]
 
             if currentClass == "car" or currentClass == "motorbike" or currentClass == "bus" or currentClass == "truck" or currentClass == "bicycle" and conf >= 0.2:
-                #cvzone.putTextRect(img, f'{classNames[cls]} {conf}', (max(0, x1), max(35, y1)), scale=1, offset=3, thickness=1, colorR=(255, 0, 0))
-                #cvzone.cornerRect(img, (x1, y1, w, h), l=15, t=5, rt=5, colorR=(10, 255, 10), colorC=(0, 0, 255))  # cornerRectangle with custom colors
+                cvzone.cornerRect(img, (x1, y1, w, h), l=15, t=5, rt=2, colorR=(0, 255, 0), colorC=(0, 0, 255))  # cornerRectangle with custom colors
+                cvzone.putTextRect(img, f'{classNames[cls]} {conf}', (max(0, x1), max(35, y1)), scale=1, offset=3, thickness=1, colorR=(255, 0, 0))
                 currentArray = np.array([x1,y1,x2,y2,conf])
                 detections = np.vstack((detections, currentArray))
 
@@ -85,8 +87,9 @@ while True:
         x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
         print(result)
         w, h = x2 - x1, y2 - y1
-        cvzone.cornerRect(img, (x1, y1, w, h), l=15, t=5, rt=2, colorR=(0, 255, 0), colorC=(0, 0, 255))
-        cvzone.putTextRect(img, f'{int(id)}', (max(0, x1), max(35, y1)), scale=1, offset=5, thickness=1, colorR=(255, 0, 0))
+        #cvzone.cornerRect(img, (x1, y1, w, h), l=15, t=5, rt=2, colorR=(0, 255, 0), colorC=(0, 0, 255))
+        #cvzone.putTextRect(img, f'{int(id)}', (max(0, x1), max(35, y1)), scale=1, offset=5, thickness=1, colorR=(255, 0, 0))
+
 
         cx, cy = x1+w//2, y1+h//2
         cv2.circle(img, (cx, cy), 5, (0, 255, 0), cv2.FILLED)
@@ -94,21 +97,20 @@ while True:
         # Print cx, cy, and limits to debug
         #print(f"ID: {id}, Center: ({cx}, {cy}), Limits: {limits}")
 
-        if limits[0] < cx < limits[2] and limits[1]-5 < cy < limits[1]+5:
+        if limits[0] < cx < limits[2] and limits[3]-5 < cy < limits[3]+5  :
             if totalCount.count(id) == 0:
                 totalCount.append(id)
                 cv2.line(img, (limits[0], limits[1]), (limits[2], limits[3]), (0, 255, 0), 5)
 
-            print(f'final count: {totalCount}')
-                # Print cx, cy, and limits to debug
-            print(f"ID: {id}, Center: ({cx}, {cy}), Limits: {limits}")
 
-    cvzone.putTextRect(img, f' Count: {len(totalCount)}', (967, 141))
+
+    #cvzone.putTextRect(img, f' Count: {len(totalCount)}', (10, 50))
+    cv2.putText(img, str(len(totalCount)), (230, 100), cv2.FONT_HERSHEY_PLAIN, 5, (50, 50, 255), 8)
     # Add the timeline to the frame
-    cv2.putText(img, timeline, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+    cv2.putText(img, timeline, (1020,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
     cv2.imshow("Video", img)   # Display the captured frame in a window named "Webcam"
     #cv2.imshow("ImageRegion", imgRegion)
-    cv2.waitKey(0)   # Wait for 1 millisecond and check if a key is pressed
+    cv2.waitKey(1)   # Wait for 1 millisecond and check if a key is pressed
 
 
