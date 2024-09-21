@@ -73,8 +73,10 @@ while True:
             currentClass = classNames[cls]
 
             if currentClass == "car" or currentClass == "motorbike" or currentClass == "bus" or currentClass == "truck" or currentClass == "bicycle" and conf >= 0.2:
+                #cvzone.putTextRect(img, f'{classNames[cls]} {conf}', (max(0, x1), max(35, y1)), scale=1, offset=3, thickness=1, colorR=(255, 0, 0))
                 cvzone.cornerRect(img, (x1, y1, w, h), l=15, t=5, rt=2, colorR=(0, 255, 0), colorC=(0, 0, 255))  # cornerRectangle with custom colors
-                cvzone.putTextRect(img, f'{classNames[cls]} {conf}', (max(0, x1), max(35, y1)), scale=1, offset=3, thickness=1, colorR=(255, 0, 0))
+                cvzone.putTextRect(img, f'{classNames[cls]} {conf}', (max(0, x1), max(35, y1)), scale=1, offset=3,
+                                   thickness=1, colorR=(255, 0, 0))
                 currentArray = np.array([x1,y1,x2,y2,conf])
                 detections = np.vstack((detections, currentArray))
 
@@ -112,5 +114,3 @@ while True:
     cv2.imshow("Video", img)   # Display the captured frame in a window named "Webcam"
     #cv2.imshow("ImageRegion", imgRegion)
     cv2.waitKey(1)   # Wait for 1 millisecond and check if a key is pressed
-
-
