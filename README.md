@@ -3,4 +3,4 @@ This is my final semester Major Project , Object detection and objects counting 
 
 **Final Output...**
 
-<img height="720" src="D:\MCA_SEM_4\Major_Project\Screenshot 2024-10-16 141745.png" width="1080"/>
+<img height=300" src="D:\MCA_SEM_4\Major_Project\Screenshot 2024-10-16 141745.png" width="500"/>
