@@ -1,6 +1,5 @@
 # Object-Detection-on-CCTV-Footage-YOLOv8
 This is my final semester Major Project , Object detection and objects counting from CCTV Footage using YOLOv8
 
-**Final Output...**
 
-<img height=300" src="D:\MCA_SEM_4\Major_Project\Screenshot 2024-10-16 141745.png" width="500"/>
+![Final Output](https://github.com/mdjunaid6731/Object-Detection-From-CCTV-Footage-YOLOv8/blob/main/Output_screenshot.png)
