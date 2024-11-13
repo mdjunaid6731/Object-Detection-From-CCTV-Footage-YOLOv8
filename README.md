@@ -14,8 +14,7 @@ The system accurately detects, tracks, and counts vehicles in real-time, improvi
 
 ![Final Output](Output_screenshot.png)
 
-
-![Final Output](count.png)
+![Final Framewise Output](count.png)
 ---
 
 ## Tools Used
